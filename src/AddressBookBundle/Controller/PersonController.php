@@ -172,7 +172,7 @@ class PersonController extends Controller
             $person = $repo->find($id);
             
             $address = $formAddress->getData();
-            $address->setPerson();
+            $address->setPerson($person);
             $person->addAddress($address);
             
             $em = $this->getDoctrine()->getManager();
@@ -194,7 +194,7 @@ class PersonController extends Controller
             $person = $repo->find($id);
             
             $email = $formEmail->getData();
-            $email->setPerson();
+            $email->setPerson($person);
             $person->addEmail($email);
             
             $em = $this->getDoctrine()->getManager();
@@ -216,7 +216,7 @@ class PersonController extends Controller
             $person = $repo->find($id);
             
             $phone = $formPhone->getData();
-            $phone->setPerson();
+            $phone->setPerson($person);
             $person->addPhone($phone);
             
             $em = $this->getDoctrine()->getManager();
