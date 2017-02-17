@@ -1,0 +1,98 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Person view:{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1>Welcome to {{ person.name }}'s Page</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table">
+                    <th>About</th>
+                    <tr>
+                        <td> Name: </td>
+                        <td> {{ person.name }} </td>
+                    </tr>
+                    <tr>
+
+                        <td> Surname: </td>
+                        <td> {{ person.surname }} </td>
+                    </tr>
+                    <tr>
+                        <td> Description: </td>
+                        <td> {{ person.description }} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Phones: </h3>
+                {% if person.phones | length > 0 %}
+                    <table class="table">
+                            <tr>
+                                <th> Phone:</th>
+                            </tr>
+                        {% for phone in person.phones %}
+                         
+                            <tr>
+                                <td> {{ phone.number }}</td>
+                            </tr>
+                        {% endfor %}   
+                    </table>
+                {% else %}
+                    <p> There is no phones... </p>
+
+                {% endif %}
+            </div>
+            
+            <div class="col-md-3">
+                <h3>Emails: </h3>
+                {% if person.emails | length > 0 %}
+                    <table class="table">
+                            <tr>
+                                <th> Email:</th>
+                            </tr>
+                        {% for email in person.emails %}
+                         
+                            <tr>
+                                <td> {{ email.address }}</td>
+                            </tr>
+                        {% endfor %}   
+                    </table>
+                {% else %}
+                    <p> There is no emails... </p>
+
+                {% endif %}
+            </div>
+            <div class="col-md-3">
+                <h3>Addresses: </h3>
+                {% if person.addresses | length > 0 %}
+                    <table class="table">
+                            <tr>
+                                <th> City:</th>
+                                <th> Street: </td>
+                            </tr>
+                        {% for address in person.addresses %}
+
+                            <tr>
+                                <td>{{ address.city }}</td>
+                                <td> {{ address.street }} {{ address.houseNo }}/{{ address.flatNo }}</td>
+                            </tr>
+                        {% endfor %}   
+                    </table>
+                {% else %}
+                    <p> There is no addresses... </p>
+
+                {% endif %}
+            </div>
+        </div>
+            
+        <br>
+        <a href="{{ path("addressbook_person_showindex")}}" class="btn btn-large btn-info">Back to main page</a>
+
+    </div>
+            
+
+{% endblock %}

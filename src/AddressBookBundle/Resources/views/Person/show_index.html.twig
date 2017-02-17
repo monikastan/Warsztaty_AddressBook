@@ -1,0 +1,34 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AddressBookBundle:Person:showIndex{% endblock %}
+
+{% block body %}
+    <div class ="container">
+    <h1>Welcome to your AddressBook</h1>
+    
+    <h3> Amount of persons: {{ persons | length }}</h3>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            {% for person in persons %}
+            <tr>
+                <td><a href="{{ path("addressbook_person_showperson", {"id":person.id}) }}">{{ person.name }}</a></td>
+                <td>{{ person.surname }}</td>
+                <td>{{ person.description }}</td>
+                <td>
+                    <a href="{{ path("addressbook_person_modifyperson", {"id":person.id}) }}" class="btn btn-primary">edit person</a>
+                    <a href="{{ path("addressbook_person_deleteperson", {"id":person.id}) }}" class="btn btn-primary">delete person</a>
+                </td>
+            </tr>
+            
+            {% endfor %}
+        </table>
+        <a href="{{ path("addressbook_person_newperson") }}" class="btn btn-primary">add new person</a>
+    </div>
+
+
+{% endblock %}

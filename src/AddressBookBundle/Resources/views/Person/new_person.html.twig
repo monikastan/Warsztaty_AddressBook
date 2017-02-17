@@ -1,0 +1,57 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}New person:{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Welcome to New Person Page</h2>
+        
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <h3>Add new person</h3>
+                    <label for="inputEmail3" class="col-sm-5 control-label">{{ form_start(form) }}</label>
+                    <label for="inputEmail3" class="col-sm-5 control-label">{{ form_widget(form) }}</label><br>
+                    <label for="inputEmail3" class="col-sm-5 control-label">{{ form_end(form) }}</label>
+                </div>
+            </div>
+         
+        {% if formAddress is defined %}
+            
+            <div class="form-group">
+                    <div class="col-sm-10">
+                        <h3>Add new address:</h3>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_start(formAddress) }}</label>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_widget(formAddress) }}</label><br>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_end(formAddress)}}</label>
+                    </div>
+            </div>
+        {% endif %}
+        
+        {% if formEmail is defined %}
+            
+            <div class="form-group">
+                    <div class="col-sm-10">
+                        <h3>Add new email:</h3>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_start(formEmail) }}</label>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_widget(formEmail) }}</label><br>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_end(formEmail)}}</label>
+                    </div>
+            </div>
+        {% endif %}
+        
+        {% if formPhone is defined %}
+            
+            <div class="form-group">
+                    <div class="col-sm-10">
+                        <h3>Add new phone:</h3>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_start(formPhone) }}</label>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_widget(formPhone) }}</label><br>
+                        <label for="inputEmail3" class="col-sm-5 control-label">{{ form_end(formPhone)}}</label>
+                    </div>
+            </div>
+        {% endif %}
+        
+    </div>
+   
+        
+{% endblock %}
