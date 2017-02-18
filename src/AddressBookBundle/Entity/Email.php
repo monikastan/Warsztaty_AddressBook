@@ -3,7 +3,7 @@
 namespace AddressBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Email
@@ -26,7 +26,7 @@ class Email
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255)
-     * 
+     *  
      */
     private $address;
 

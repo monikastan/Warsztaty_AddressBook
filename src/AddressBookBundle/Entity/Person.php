@@ -3,7 +3,7 @@
 namespace AddressBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Person
@@ -26,7 +26,7 @@ class Person
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
-     * @Assert\Length(min=2, minMessage="Imię musi być dłuższe niz 2 znaki")
+     * 
      */
     private $name;
 
@@ -34,7 +34,7 @@ class Person
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255)
-     * @Assert\Length(min=2, minMessage="Nazwisko musi być dłuższe niz 2 znaki")
+     * 
      */
     private $surname;
 
@@ -42,7 +42,7 @@ class Person
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
-     * @Assert\NotNull(message="To pole nie może być puste")
+     * 
      */
     private $description;
     /**

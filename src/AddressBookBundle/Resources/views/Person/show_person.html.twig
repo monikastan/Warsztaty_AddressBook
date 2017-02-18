@@ -7,7 +7,7 @@
     <div class="container">
         <h1>Welcome to {{ person.name }}'s Page</h1>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-18">
                 <table class="table">
                     <th>About</th>
                     <tr>
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h3>Phones: </h3>
                 {% if person.phones | length > 0 %}
                     <table class="table">
@@ -37,7 +37,8 @@
                         {% for phone in person.phones %}
                          
                             <tr>
-                                <td> {{ phone.number }}</td>
+                                <td> {{ phone.number }} 
+                                     <a href="{{ path("addressbook_person_deletephone", {"id":phone.id}) }}" class="btn btn-primary">delete phone</a></td>
                             </tr>
                         {% endfor %}   
                     </table>
@@ -47,7 +48,7 @@
                 {% endif %}
             </div>
             
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h3>Emails: </h3>
                 {% if person.emails | length > 0 %}
                     <table class="table">
@@ -57,7 +58,8 @@
                         {% for email in person.emails %}
                          
                             <tr>
-                                <td> {{ email.address }}</td>
+                                <td> {{ email.address }}
+                                    <a href="{{ path("addressbook_person_deleteemail", {"id":email.id}) }}" class="btn btn-primary">delete email</a></td>
                             </tr>
                         {% endfor %}   
                     </table>
@@ -66,7 +68,7 @@
 
                 {% endif %}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h3>Addresses: </h3>
                 {% if person.addresses | length > 0 %}
                     <table class="table">
@@ -78,7 +80,8 @@
 
                             <tr>
                                 <td>{{ address.city }}</td>
-                                <td> {{ address.street }} {{ address.houseNo }}/{{ address.flatNo }}</td>
+                                <td> {{ address.street }} {{ address.houseNo }}/{{ address.flatNo }} 
+                                    <a href="{{ path("addressbook_person_deleteaddress", {"id":address.id}) }}" class="btn btn-primary">delete address</a></td>
                             </tr>
                         {% endfor %}   
                     </table>

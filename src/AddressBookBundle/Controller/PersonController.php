@@ -86,6 +86,51 @@ class PersonController extends Controller
         }
         return $this->redirectToRoute("addressbook_person_showindex");
     }
+    /**
+     * @Route("/{id}/deleteAddress", requirements={"id"="\d+"})
+     */
+    public function deleteAddressAction($id){
+        $addressRepo = $this->getDoctrine()->getRepository('AddressBookBundle:Address');
+        $em = $this->getDoctrine()->getManager();
+        $address = $addressRepo->find($id);
+        
+        if($address != null){
+            $person = $address->getPerson();
+            $em->remove($address);
+            $em->flush();
+        }
+        return $this->redirectToRoute("addressbook_person_showperson", ['id' => $person->getId()]);
+    }
+    /**
+     * @Route("/{id}/deleteEmail", requirements={"id"="\d+"})
+     */
+    public function deleteEmailAction($id){
+        $emailRepo = $this->getDoctrine()->getRepository('AddressBookBundle:Email');
+        $em = $this->getDoctrine()->getManager();
+        $email = $emailRepo->find($id);
+        
+        if($email != null){
+            $person = $email->getPerson();
+            $em->remove($email);
+            $em->flush();
+        }
+        return $this->redirectToRoute("addressbook_person_showperson", ['id' => $person->getId()]);
+    }
+    /**
+     * @Route("/{id}/deletePhone", requirements={"id"="\d+"})
+     */
+    public function deletePhoneAction($id){
+        $phoneRepo = $this->getDoctrine()->getRepository('AddressBookBundle:Phone');
+        $em = $this->getDoctrine()->getManager();
+        $phone = $phoneRepo->find($id);
+        
+        if($phone != null){
+            $person = $phone->getPerson();
+            $em->remove($phone);
+            $em->flush();
+        }
+        return $this->redirectToRoute("addressbook_person_showperson", ['id' => $person->getId()]);
+    }
     public function generateForm($person, $action){
         $form = $this->createFormBuilder($person)
                 ->setAction($action)
@@ -189,7 +234,7 @@ class PersonController extends Controller
         $email = new Email();
         $formEmail = $this->generateEmailForm($email, null);
         $formEmail->handleRequest($req);
-        if($formEmail->isSubmitted()){
+        if($formEmail->isSubmitted()) {
             $repo = $this->getDoctrine()->getRepository('AddressBookBundle:Person');
             $person = $repo->find($id);
             

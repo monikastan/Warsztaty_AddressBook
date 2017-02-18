@@ -3,7 +3,6 @@
 namespace AddressBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Address
@@ -26,7 +25,7 @@ class Address
      * @var string
      *
      * @ORM\Column(name="city", type="string", length=255)
-     * @Assert\NotNull()
+     * 
      */
     private $city;
 
@@ -34,7 +33,7 @@ class Address
      * @var string
      *
      * @ORM\Column(name="street", type="string", length=255)
-     * @Assert\Length(min=2, minMessage="Nazwa ulicy musi być dłuższa niz 2 znaki")
+     * 
      */
     private $street;
 
@@ -42,7 +41,7 @@ class Address
      * @var string
      *
      * @ORM\Column(name="house_no", type="string", length=16)
-     * @Assert\NotNull()
+     * 
      */
     private $houseNo;
 
