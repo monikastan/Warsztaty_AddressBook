@@ -57,6 +57,11 @@ class Person
      * @ORM\OneToMany(targetEntity="Email", mappedBy="person", cascade={"persist"}, cascade={"remove"})
      */
     private $emails;
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
 
 
     /**
@@ -246,5 +251,28 @@ class Person
     public function getEmails()
     {
         return $this->emails;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AddressBookBundle\Entity\User $user
+     * @return Person
+     */
+    public function setUser(\AddressBookBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AddressBookBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

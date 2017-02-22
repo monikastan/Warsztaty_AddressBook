@@ -10,6 +10,7 @@ use AddressBookBundle\Entity\Address;
 use AddressBookBundle\Entity\Person;
 use AddressBookBundle\Entity\Email;
 use AddressBookBundle\Entity\Phone;
+use AddressBookBundle\Entity\User;
 
 class PersonController extends Controller
 {
@@ -21,8 +22,19 @@ class PersonController extends Controller
     {
         $repo = $this->getDoctrine()->getRepository('AddressBookBundle:Person');
         
-        $persons = $repo->findOrderBySurname();
         
+        
+        //pobieram zalogowanego użytkownika
+        $user = $this->container
+                ->get('security.context')
+                ->getToken()
+                ->getUser();
+        if($user instanceof User) {
+            $persons = $repo->findOrderBySurname($user->getId());
+        } else {
+            $persons = [];
+        }
+               
         return $this->render(
                             'AddressBookBundle:Person:show_index.html.twig', 
                             ['persons' => $persons]);
@@ -36,6 +48,7 @@ class PersonController extends Controller
         $repo = $this->getDoctrine()->getRepository('AddressBookBundle:Person');
         
         $person = $repo->find($id);
+        $this->checkLoginUser($person);
         
         if($person == null) {
             throw $this->createNotFoundException();
@@ -73,6 +86,17 @@ class PersonController extends Controller
         
         
     }
+    public function checkLoginUser(Person $person){
+        $user = $this->container
+                ->get('security.context')
+                ->getToken()
+                ->getUser();
+                
+        if($person->getUser() != $user) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Access denied!');
+        }
+    }
+
     /**
      * @Route("/{id}/delete", requirements={"id"="\d+"})
      */
@@ -80,6 +104,9 @@ class PersonController extends Controller
         $personRepo = $this->getDoctrine()->getRepository('AddressBookBundle:Person');
         $em = $this->getDoctrine()->getManager();
         $person = $personRepo->find($id);
+        
+        $this->checkLoginUser($person);
+        
         if($person != null){
             $em->remove($person);
             $em->flush();
@@ -180,6 +207,7 @@ class PersonController extends Controller
         $action  = $this->generateUrl('addressbook_person_createperson');
         $formPerson = $this->generateForm($person, $action);
         
+                
         return $this->render('AddressBookBundle:Person:new_person.html.twig', ['form' => $formPerson->createView()]);
     }
     /**
@@ -191,8 +219,16 @@ class PersonController extends Controller
         $action = $this->generateUrl('addressbook_person_createperson');
         $form = $this->generateForm($person, $action);
         $form->handleRequest($req);
-        if($form->isSubmitted() && $form->isValid()){
+        
+        $user = $this->container
+                ->get('security.context')
+                ->getToken()
+                ->getUser();
+        
+        if($form->isSubmitted() && $form->isValid() && ($user instanceof User)){
             $person = $form->getData();
+            $person->setUser($user);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($person);
             $em->flush();
@@ -277,9 +313,12 @@ class PersonController extends Controller
     public function modifyPersonAction(Request $req, $id){
         $personRepo = $this->getDoctrine()->getRepository('AddressBookBundle:Person');
         $person = $personRepo->find($id);
+        
         $action = $this->generateUrl('addressbook_person_modifyperson', ['id' => $person->getId()]);
         $form = $this->generateForm($person, $action);
         $form->handleRequest($req);
+        
+        $this->checkLoginUser($person);
         
         if($req->getMethod() == "POST" && $form->isSubmitted() && $form->isValid()){
             $person = $form->getData();

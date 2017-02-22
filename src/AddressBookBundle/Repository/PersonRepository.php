@@ -12,9 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class PersonRepository extends EntityRepository
 {
-    public function findOrderBySurname(){
+    public function findOrderBySurname($id){
         $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT p FROM AddressBookBundle:Person p ORDER BY p.surname ASC");
+        $query = $em->createQuery("SELECT p FROM AddressBookBundle:Person p WHERE p.user = :id ORDER BY p.surname ASC");
+        $query->setParameter('id', $id);
         $persons = $query->getResult();
         return $persons;
     }
